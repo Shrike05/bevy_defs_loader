@@ -9,8 +9,7 @@ pub struct GameDef {
 
 impl Def for GameDef {}
 
-#[test]
-fn test_loading_def() {
+fn setup_app() -> App {
     let mut app = App::new();
 
     app.add_plugins(StatesPlugin);
@@ -21,6 +20,20 @@ fn test_loading_def() {
 
     app.finish();
     app.cleanup();
+    app
+}
+
+fn assert_state<T: States>(app: &App, test_state: T) {
+    let def_state = app
+        .world()
+        .get_resource::<State<T>>()
+        .expect("Def Load State does not exist");
+    assert_eq!(**def_state, test_state);
+}
+
+#[test]
+fn test_loading_def() {
+    let mut app = setup_app();
 
     loop {
         app.update();
@@ -42,29 +55,10 @@ fn test_loading_def() {
 #[test]
 fn test_states_def() {
     use std::marker::PhantomData;
+    let mut app = setup_app();
 
-    let mut app = App::new();
-
-    app.add_plugins(StatesPlugin);
-    app.add_plugins(MinimalPlugins);
-    app.add_plugins(AssetPlugin::default());
-    app.add_plugins(DefsPlugin);
-    app.add_plugins(DefPlugin::<GameDef>::new("test_assets"));
-
-    app.finish();
-    app.cleanup();
-
-    let def_state = app
-        .world()
-        .get_resource::<State<DefLoadState<GameDef>>>()
-        .expect("Def Load State does not exist");
-    assert_eq!(**def_state, DefLoadState::<GameDef>::Loading(PhantomData));
-
-    let load_state = app
-        .world()
-        .get_resource::<State<DefsLoadState>>()
-        .expect("Load State does not exist");
-    assert_eq!(**load_state, DefsLoadState::Loading);
+    assert_state(&app, DefLoadState::<GameDef>::Loading(PhantomData));
+    assert_state(&app, DefsLoadState::Loading);
 
     loop {
         app.update();
@@ -79,15 +73,6 @@ fn test_states_def() {
     }
     app.update();
 
-    let def_state = app
-        .world()
-        .get_resource::<State<DefLoadState<GameDef>>>()
-        .expect("Def Load State does not exist");
-    assert_eq!(**def_state, DefLoadState::<GameDef>::Ready);
-
-    let load_state = app
-        .world()
-        .get_resource::<State<DefsLoadState>>()
-        .expect("Load State does not exist");
-    assert_eq!(**load_state, DefsLoadState::Ready);
+    assert_state(&app, DefLoadState::<GameDef>::Ready);
+    assert_state(&app, DefsLoadState::Ready);
 }
