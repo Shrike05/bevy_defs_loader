@@ -5,5 +5,5 @@ mod plugin;
 mod test;
 mod types;
 
-pub use plugin::DefsPlugin;
+pub use plugin::DefPlugin;
 pub use types::*;
