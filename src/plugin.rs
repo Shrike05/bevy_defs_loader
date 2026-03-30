@@ -16,5 +16,15 @@ impl<T: Def> Plugin for DefsPlugin<T> {
         app.init_asset::<T>();
         app.add_plugins(TomlAssetPlugin::<T>::new(&["toml"]));
         app.add_systems(Startup, setup::<T>);
+        app.add_systems(Update, check_and_init_lock::<T>);
+    }
+}
+
+impl<T: Def> DefsPlugin<T> {
+    pub fn new(def_folder: &'static str) -> Self {
+        DefsPlugin {
+            def_folder,
+            _marker: PhantomData,
+        }
     }
 }
