@@ -1,4 +1,4 @@
-use crate::*;
+use crate::{types::LoadingRegistry, *};
 use bevy::{asset::LoadedFolder, prelude::*};
 
 pub fn setup<T: Def>(
