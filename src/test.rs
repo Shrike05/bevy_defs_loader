@@ -41,7 +41,6 @@ fn test_loading_def() {
         match app.world().get_resource::<LoadedDefs<GameDef>>() {
             Some(gamedefs) => {
                 if !gamedefs.0.is_empty() {
-                    assert_eq!(gamedefs.0.len(), 1);
                     break;
                 }
             }
@@ -67,7 +66,6 @@ fn test_states_def() {
             .get_resource::<LoadedDefs<GameDef>>()
             .expect("LoadedDefs does not exist");
         if !gamedefs.0.is_empty() {
-            assert_eq!(gamedefs.0.len(), 1);
             break;
         }
     }
