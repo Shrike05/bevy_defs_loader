@@ -40,9 +40,9 @@ pub fn check_and_init_lock<T: Def>(
 
 pub fn check_load_state(
     loading_reg: Res<LoadingRegistry>,
-    mut load_state: ResMut<NextState<LoadState>>,
+    mut load_state: ResMut<NextState<DefsLoadState>>,
 ) {
     if loading_reg.is_ready() {
-        load_state.set(LoadState::Ready);
+        load_state.set(DefsLoadState::Ready);
     }
 }

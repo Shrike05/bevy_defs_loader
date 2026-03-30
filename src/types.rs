@@ -34,7 +34,7 @@ pub enum DefLoadState<T: Def> {
 }
 
 #[derive(States, Clone, Copy, Debug, Hash, PartialEq, Eq, Default)]
-pub enum LoadState {
+pub enum DefsLoadState {
     #[default]
     Loading,
     Ready,

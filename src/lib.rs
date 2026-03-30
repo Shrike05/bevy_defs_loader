@@ -5,5 +5,5 @@ mod plugin;
 mod test;
 mod types;
 
-pub use plugin::DefPlugin;
-pub use types::*;
+pub use plugin::{DefPlugin, DefsPlugin};
+pub use types::{Def, DefLoadState, DefsFolder, DefsHandle, DefsLoadState, LoadedDefs};

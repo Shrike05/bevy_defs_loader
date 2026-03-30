@@ -62,9 +62,9 @@ fn test_states_def() {
 
     let load_state = app
         .world()
-        .get_resource::<State<LoadState>>()
+        .get_resource::<State<DefsLoadState>>()
         .expect("Load State does not exist");
-    assert_eq!(**load_state, LoadState::Loading);
+    assert_eq!(**load_state, DefsLoadState::Loading);
 
     loop {
         app.update();
@@ -87,7 +87,7 @@ fn test_states_def() {
 
     let load_state = app
         .world()
-        .get_resource::<State<LoadState>>()
+        .get_resource::<State<DefsLoadState>>()
         .expect("Load State does not exist");
-    assert_eq!(**load_state, LoadState::Ready);
+    assert_eq!(**load_state, DefsLoadState::Ready);
 }

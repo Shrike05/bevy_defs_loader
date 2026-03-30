@@ -1,4 +1,5 @@
 use crate::loader::*;
+use crate::types::LoadingRegistry;
 use crate::*;
 use bevy::prelude::*;
 use bevy_common_assets::toml::TomlAssetPlugin;
@@ -41,10 +42,10 @@ impl<T: Def> DefPlugin<T> {
 impl Plugin for DefsPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(LoadingRegistry::default());
-        app.insert_state(LoadState::Loading);
+        app.insert_state(DefsLoadState::Loading);
         app.add_systems(
             Update,
-            check_load_state.run_if(in_state(LoadState::Loading)),
+            check_load_state.run_if(in_state(DefsLoadState::Loading)),
         );
     }
 }
